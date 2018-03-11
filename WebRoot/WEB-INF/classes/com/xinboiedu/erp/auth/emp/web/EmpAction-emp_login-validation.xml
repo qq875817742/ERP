@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE validators PUBLIC
+  		"-//Apache Struts//XWork Validator 1.0.3//EN"
+  		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+
+<validators>
+	<!-- 要校验的参数 -->
+	<field name="em.username">
+		<!-- 校验的类型 -->
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>用户名不能为空</message>
+		</field-validator>
+
+		<field-validator type="stringlength">
+			<param name="minLength">5</param>
+			<param name="maxLength">12</param>
+			<param name="trim">true</param>
+			<message>用户名必须在5~12之间</message>
+		</field-validator>
+	</field>
+	
+	<field name="em.password">
+		<!-- 校验的类型 -->
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>密码不能为空</message>
+		</field-validator>
+
+		<field-validator type="stringlength">
+			<param name="minLength">5</param>
+			<param name="maxLength">12</param>
+			<param name="trim">true</param>
+			<message>密码必须在5~12之间</message>
+		</field-validator>
+		
+	</field>
+
+
+</validators>

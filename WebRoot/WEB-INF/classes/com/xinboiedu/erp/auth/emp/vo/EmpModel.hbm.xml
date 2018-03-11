@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<class name="com.xinboiedu.erp.auth.emp.vo.EmpModel" table="t_emp">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="username"></property>
+		<property name="password"></property>
+		<property name="name"></property>
+		<property name="email"></property>
+		<property name="tele"></property>
+		<property name="address"></property>
+		<property name="gender"></property>
+		<property name="birthday"></property>
+		<property name="lastLoginTime"></property>
+		<property name="lastLoginIp"></property>
+		<property name="loginCount"></property>
+		<!-- 对部门多对一 -->
+		<many-to-one name="dep" class="com.xinboiedu.erp.auth.dep.vo.DepModel" column="depId"></many-to-one>
+		<!-- 对角色多对多 -->
+		<set name="roles" table="t_emp_role">
+			<key column="empId"></key>
+			<many-to-many column="roleId" class="com.xinboiedu.erp.auth.role.vo.RoleModel"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>

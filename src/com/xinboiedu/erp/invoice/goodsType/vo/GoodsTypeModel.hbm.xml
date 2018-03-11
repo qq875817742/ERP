@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<class name="com.xinboiedu.erp.invoice.goodsType.vo.GoodsTypeModel" table="t_goodstype">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="name"></property>
+		
+		<many-to-one name="sm" column="supplierId" class="com.xinboiedu.erp.invoice.supplier.vo.SupplierModel"></many-to-one>
+	</class>
+</hibernate-mapping>

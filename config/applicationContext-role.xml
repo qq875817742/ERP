@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="roleDao" class="com.xinboiedu.erp.auth.role.dao.impl.RoleImpl"
+		parent="baseDao"
+	></bean>
+
+	<bean id="roleEbi" class="com.xinboiedu.erp.auth.role.business.ebo.RoleEbo">
+		<property name="roleDao" ref="roleDao"></property>
+	</bean>
+
+	<bean id="roleAction" class="com.xinboiedu.erp.auth.role.web.RoleAction"
+		scope="prototype"
+	>
+		<property name="roleEbi" ref="roleEbi"></property>
+		<property name="resEbi" ref="resEbi"></property>
+		<property name="menuEbi" ref="menuEbi"></property>
+	</bean>
+</beans> 

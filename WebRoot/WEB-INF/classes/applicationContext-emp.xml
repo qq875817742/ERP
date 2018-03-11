@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="empDao" class="com.xinboiedu.erp.auth.emp.dao.impl.EmpImpl"
+		parent="baseDao"
+	></bean>
+
+	<bean id="empEbi" class="com.xinboiedu.erp.auth.emp.business.ebo.EmpEbo">
+		<property name="empDao" ref="empDao"></property>
+	</bean>
+
+	<bean id="empAction" class="com.xinboiedu.erp.auth.emp.web.EmpAction"
+		scope="prototype"
+	>
+		<property name="empEbi" ref="empEbi"></property>
+		<property name="depEbi" ref="depEbi"></property>
+		<property name="roleEbi" ref="roleEbi"></property>
+		<property name="resEbi" ref="resEbi"></property>
+	</bean>
+</beans> 

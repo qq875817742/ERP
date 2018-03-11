@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!-- 常量设置 -->
+    <!-- 开发模式 -->
+    <constant name="struts.devMode" value="true"></constant>
+  	<!-- Struts UI标签的风格 -->
+    <constant name="struts.ui.theme" value="simple"></constant>
+        
+    <!-- Action 配置  -->
+	<package name="erp" extends="json-default">
+	
+		<!--拦截器配置  -->
+ 		<interceptors>
+ 		<!-- 自定义拦截方法 -->
+ 			<interceptor name="authInterceptor" class="com.xinboiedu.erp.Interceptor.AuthInterceptor"></interceptor>
+ 			<interceptor name="exceptionInterceptor" class="com.xinboiedu.erp.Interceptor.ExceptionInterceptor"></interceptor>
+ 			<interceptor-stack name="myStack">
+ 				<interceptor-ref name="exceptionInterceptor"></interceptor-ref>
+ 				<interceptor-ref name="defaultStack"></interceptor-ref>
+ 				<interceptor-ref name="authInterceptor"></interceptor-ref>
+ 			</interceptor-stack>
+ 		</interceptors>
+ 		<!-- 拦截器生效 -->
+ 		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+ 		<!-- 全局视图 -->
+ 		<global-results>
+ 			<result name="toLogin" type="redirect">/index.jsp</result>
+ 			<result name="error" >/error.jsp</result>
+ 		</global-results>
+	<!-- 访问默认jsp页面 -->
+		<action name="page_*">
+			<result>/WEB-INF/jsps/{1}.jsp</result>
+		</action>
+		
+		<!-- 用户模块 -->
+		<action name="emp_*" class="empAction" method="{1}">
+			<result name="loginErro">/WEB-INF/jsps/login.jsp</result>
+			<result name="loginSuccess" type="redirectAction">page_main</result>
+			<result name="list">/WEB-INF/jsps/emp/list.jsp</result>
+			<result name="input">/WEB-INF/jsps/emp/input.jsp</result>	
+			<result name="toList" type="redirectAction">emp_list.action?pageNum=${pageNum}</result>
+			<result name="toChangePwd">/WEB-INF/jsps/emp/changePwd.jsp</result>
+		</action>
+		<!-- 验证码 -->
+		<action name="checkImg" class="com.xinboiedu.erp.auth.emp.web.CheckImgAction"></action>
+		
+		<!-- 部门模块  -->
+		<action name="dep_*" class="depAction" method="{1}">
+			<result name="list">/WEB-INF/jsps/dep/list.jsp</result>
+			<result name="input">/WEB-INF/jsps/dep/input.jsp</result>
+			<result name="toList" type="redirectAction">dep_list.action?pageNum=${pageNum}</result>
+		</action>
+		<!-- 仓库模块  -->
+		<action name="store_*" class="storeAction" method="{1}">
+			<result name="list">/WEB-INF/jsps/store/list.jsp</result>
+			<result name="input">/WEB-INF/jsps/store/input.jsp</result>
+			<result name="toList" type="redirectAction">store_list.action?pageNum=${pageNum}</result>
+		</action>
+		<!--角色模块   -->
+		<action name="role_*" class="roleAction" method="{1}">
+			<result name="list">/WEB-INF/jsps/role/list.jsp</result>
+			<result name="input">/WEB-INF/jsps/role/input.jsp</result>
+			<result name="toList" type="redirectAction">role_list.action?pageNum=${pageNum}</result>
+		</action>
+		<!--资源模块   -->
+		<action name="res_*" class="resAction" method="{1}">
+			<result name="list">/WEB-INF/jsps/res/list.jsp</result>
+			<result name="input">/WEB-INF/jsps/res/input.jsp</result>
+			<result name="toList" type="redirectAction">res_list.action?pageNum=${pageNum}</result>
+		</action>
+		<!-- 菜单模块 -->
+		<action name="menu_*" class="menuAction" method="{1}">
+			<result name="list">/WEB-INF/jsps/menu/list.jsp</result>
+			<result name="input">/WEB-INF/jsps/menu/input.jsp</result>
+			<result name="toList" type="redirectAction">menu_list.action?pageNum=${pageNum}</result>
+		</action>
+		<!-- 供应商模块 -->
+		<action name="supplier_*" class="supplierAction" method="{1}">
+			<result name="list">/WEB-INF/jsps/supplier/list.jsp</result>
+			<result name="input">/WEB-INF/jsps/supplier/input.jsp</result>
+			<result name="toList" type="redirectAction">supplier_list.action?pageNum=${pageNum}</result>
+		</action>
+		<!-- 商品类别模块 -->
+		<action name="goodsType_*" class="goodsTypeAction" method="{1}">
+			<result name="list">/WEB-INF/jsps/goodsType/list.jsp</result>
+			<result name="input">/WEB-INF/jsps/goodsType/input.jsp</result>
+			<result name="toList" type="redirectAction">goodsType_list.action?pageNum=${pageNum}</result>
+			<result name="ajaxGetBySm" type="json">
+				<!-- 设置要返回的数据的过滤  -->
+				<param name="includeProperties">
+					gtmList\[\d+\]\.id,
+					gtmList\[\d+\]\.name
+				</param>
+			</result>
+		</action>
+		<!-- 商品模块 -->
+		<action name="goods_*" class="goodsAction" method="{1}">
+			<result name="list">/WEB-INF/jsps/goods/list.jsp</result>
+			<result name="input">/WEB-INF/jsps/goods/input.jsp</result>
+			<result name="toList" type="redirectAction">goods_list.action?pageNum=${pageNum}</result>
+		</action>				
+		<!-- 库存操作模块 -->
+		<action name="operDetail_*" class="operDetailAction" method="{1}">
+			<result name="list">/WEB-INF/jsps/order/oper/list.jsp</result>
+		</action>				
+		<!-- 库存模块 -->
+		<action name="storeDetail_*" class="storeDetailAction" method="{1}">
+			<result name="list">/WEB-INF/jsps/order/detail/list.jsp</result>
+		</action>				
+		<!-- 订单详情模块 -->
+		<action name="orderDetail_*" class="orderDetailAction" method="{1}">
+		<result name="ajaxGetSurplus" type="json">
+			<param name="root">om</param>
+			<param name="includeProperties">
+				surplus
+			</param>
+		</result>
+		</action>				
+		<!-- 订单模块 -->
+		<action name="order_*" class="orderAction" method="{1}">
+			<result name="buyList">/WEB-INF/jsps/order/buy/inList.jsp</result>
+			<result name="buyInput">/WEB-INF/jsps/order/buy/input.jsp</result>
+			<result name="toBuyList" type="redirectAction">order_buyList.action?pageNum=${pageNum}</result>
+			<result name="buyDetail">/WEB-INF/jsps/order/buy/inDetailList.jsp</result>
+			<!-- 采购审批 -->
+			<result name="buyCheckList">/WEB-INF/jsps/order/buy/buyCheckList.jsp</result>
+			<result name="buyCheckDetail">/WEB-INF/jsps/order/buy/buyCheckDetail.jsp</result>
+			<result name="toBuyCheckList" type="redirectAction">order_buyCheckList.action?pageNum=${pageNum}</result>
+			<!-- 仓库管理  -->
+			<result name="inStoreList">/WEB-INF/jsps/order/in/list.jsp</result>
+			<result name="inStoreDetail">/WEB-INF/jsps/order/in/inDetail.jsp</result>
+			
+			
+			
+			<!-- AJX -->
+			<result name="ajaxGetGtmAndGm" type="json">
+				<!-- 设置要返回的数据的过滤  -->
+				<param name="includeProperties">
+					gtmList\[\d+\]\.id,
+					gtmList\[\d+\]\.name,
+					gmList\[\d+\]\.id,
+					gmList\[\d+\]\.name,
+					gm\.inPriceView
+				</param>
+				</result>
+			<result name="ajaxGetGm" type="json">
+				<!-- 设置要返回的数据的过滤  -->
+				<param name="includeProperties">
+					gmList\[\d+\]\.id,
+					gmList\[\d+\]\.name,
+					gm\.inPriceView
+				</param>
+			</result>
+			<result name="ajaxGetPrice" type="json">
+				<!-- 设置要返回的数据的过滤  -->
+				<param name="includeProperties">
+					gm\.inPriceView
+				</param>
+			</result>
+			<result name="ajaxInStore" type="json">
+				<!-- 设置要返回的数据的过滤  -->
+				<param name="root">odm</param>
+				<param name="includeProperties">
+					surplus,
+					num
+				</param>
+			</result>
+			
+			
+		</action>	
+		<!-- 运输管理 -->
+		<action name="transport_*" class="orderAction" method="{1}">	
+			<result name="taskList">/WEB-INF/jsps/order/transport/list.jsp</result>
+			<result name="toAssignTask">/WEB-INF/jsps/order/transport/assignTask.jsp</result>
+			<result name="tasks">/WEB-INF/jsps/order/transport/tasks.jsp</result>
+			<result name="taskDetail">/WEB-INF/jsps/order/transport/taskDetail.jsp</result>
+			<result name="toTasksList" type="redirectAction">transport_taskList.action?pageNum=${pageNum}</result>
+			<result name="toTasks" type="redirectAction">transport_tasks.action?pageNum=${pageNum}</result>
+		</action>
+			<!-- 报表模块 -->
+		<action name="bill_*" class="billAction" method="{1}">
+			<result name="buyBillList">/WEB-INF/jsps/bill/buyBillList.jsp</result>
+			<result name="downloadExcel" type="stream">
+				<param name="inputName">downloadExcelStream</param>
+				<!-- 返回给浏览器的文件类型。 通用二进制的文件-->
+				<param name="contentType">application/octet-stream</param>
+				<!-- 返回给流程器的输入流 -->
+				<param name="inputName">downloadExcelStream</param>
+				<!-- 告知浏览器下载文件方式 
+				     文件名称:${name} 调用Action对象中的getName()
+				-->
+				<param name="contentDisposition">attachment;filename=${xlsName}</param>
+			</result>
+			
+			<result name="ajaxGetBillDetail" type="json">
+				<!-- 设置要返回的数据的过滤  -->
+				<param name="root">odmList</param>
+				<param name="includeProperties">
+					 \[\d+\]\.num,
+			    	 \[\d+\]\.priceView,
+			   		 \[\d+\]\.totalView,
+			   	 	 \[\d+\]\.om\.orderNum,
+			   	 	 \[\d+\]\.om\.createTimeView
+				</param>
+			</result>
+		</action>		
+	</package>
+
+</struts>

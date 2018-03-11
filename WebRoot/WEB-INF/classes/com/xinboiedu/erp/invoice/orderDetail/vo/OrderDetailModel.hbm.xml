@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<class name="com.xinboiedu.erp.invoice.orderDetail.vo.OrderDetailModel" table="t_orderdetail">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="num"></property>
+		<property name="price"></property>
+		<property name="surplus"></property>
+		
+		<many-to-one name="gm" column="goodsId" class="com.xinboiedu.erp.invoice.goods.vo.GoodsModel"></many-to-one>
+		<many-to-one name="om" column="orderId" class="com.xinboiedu.erp.invoice.order.vo.OrderModel"></many-to-one>
+		
+		
+	</class>
+</hibernate-mapping>

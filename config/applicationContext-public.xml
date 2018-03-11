@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+	<!-- 所有模块公用配置 -->
+	
+	<!--1. 数据源  -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql:///d_erp"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="123456"></property>
+		<property name="initialPoolSize" value="3"></property>
+		<property name="maxPoolSize" value="6"></property>
+		<property name="maxStatements" value="100"></property>
+		<property name="acquireIncrement" value="2"></property>
+	</bean>
+	
+	<!--2. Spring对SessionFactory创建  -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+      			<prop key="hibernate.format_sql">true</prop>
+      			<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+		</props>
+		</property>
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:com/xinboiedu/erp/**/vo/*Model.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!--3.事务管理  -->
+	<!-- a. 事务管理器类    引用sessionFactory对象-->
+	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    	<property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <!-- 开始注解方式的声明式事务管理  -->
+    <tx:annotation-driven transaction-manager="txManager"/>
+    
+    <!-- 公用配置 -->
+    <!-- abstract="true" 不会被实例化用于被其他bean继承 -->
+    <bean id="baseDao" abstract="true">
+      <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+	
+	
+</beans>     
+
+
+
+
+
+
+
+
+
+

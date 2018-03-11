@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="orderDao" class="com.xinboiedu.erp.invoice.order.dao.impl.OrderImpl"
+		parent="baseDao"
+	></bean>
+
+	<bean id="orderEbi" class="com.xinboiedu.erp.invoice.order.business.ebo.OrderEbo">
+		<property name="orderDao" ref="orderDao"></property>
+		<property name="orderDetailDao" ref="orderDetailDao"></property>
+		<property name="operDetailDao" ref="operDetailDao"></property>
+		<property name="storeDetailDao" ref="storeDetailDao"></property>
+	</bean>
+
+	<bean id="orderAction" class="com.xinboiedu.erp.invoice.order.web.OrderAction"
+		scope="prototype"
+	>
+		<property name="orderEbi" ref="orderEbi"></property>
+		<property name="supplierEbi" ref="supplierEbi"></property>
+		<property name="goodsTypeEbi" ref="goodsTypeEbi"></property>
+		<property name="goodsEbi" ref="goodsEbi"></property>
+		<property name="empEbi" ref="empEbi"></property>
+		<property name="storeEbi" ref="storeEbi"></property>
+	</bean>
+</beans> 

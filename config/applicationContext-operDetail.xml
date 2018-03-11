@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="operDetailDao" class="com.xinboiedu.erp.invoice.operDetail.dao.impl.OperDetailImpl"
+		parent="baseDao"
+	></bean>
+
+	<bean id="operDetailEbi" class="com.xinboiedu.erp.invoice.operDetail.business.ebo.OperDetailEbo">
+		<property name="operDetailDao" ref="operDetailDao"></property>
+	</bean>
+
+	<bean id="operDetailAction" class="com.xinboiedu.erp.invoice.operDetail.web.OperDetailAction"
+		scope="prototype"
+	>
+		<property name="operDetailEbi" ref="operDetailEbi"></property>
+	</bean>
+</beans> 

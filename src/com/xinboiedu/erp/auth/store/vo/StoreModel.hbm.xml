@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<class name="com.xinboiedu.erp.auth.store.vo.StoreModel" table="t_store">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="name"></property>
+		<property name="address"></property>
+		
+		<many-to-one name="em" column="empId" class="com.xinboiedu.erp.auth.emp.vo.EmpModel">		</many-to-one>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="resDao" class="com.xinboiedu.erp.auth.res.dao.impl.ResImpl"
+		parent="baseDao"
+	></bean>
+
+	<bean id="resEbi" class="com.xinboiedu.erp.auth.res.business.ebo.ResEbo">
+		<property name="resDao" ref="resDao"></property>
+	</bean>
+
+	<bean id="resAction" class="com.xinboiedu.erp.auth.res.web.ResAction"
+		scope="prototype"
+	>
+		<property name="resEbi" ref="resEbi"></property>
+	</bean>
+</beans> 

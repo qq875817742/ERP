@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<class name="com.xinboiedu.erp.auth.role.vo.RoleModel" table="t_role">
+		<id name="id" >
+			<generator class="native"></generator>
+		</id>
+		<property name="name"></property>
+		<property name="code"></property>
+		<set name="ress" table="t_role_res">
+			<key column="roleId"></key>
+			<many-to-many column="resId" class="com.xinboiedu.erp.auth.res.vo.ResModel"></many-to-many>
+		</set>
+		<set name="menues" table="t_role_menu">
+			<key column="roleId"></key>
+			<many-to-many column="menuId" class="com.xinboiedu.erp.auth.menu.vo.MenuModel"></many-to-many>
+		</set>
+		<set name="emps" table="t_emp_role" inverse="true">
+			<key column="roleId"></key>
+			<many-to-many column="empId" class="com.xinboiedu.erp.auth.emp.vo.EmpModel"></many-to-many>
+		</set>
+		
+	</class>
+</hibernate-mapping>

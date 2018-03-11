@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+	<class name="com.xinboiedu.erp.invoice.order.vo.OrderModel" table="t_order">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="orderNum"></property>
+		<property name="totalNum"></property>
+		<property name="createTime"></property>
+		<property name="checkedTime"></property>
+		<property name="endTime"></property>
+		<property name="orderType"></property>
+		<property name="status"></property>
+		<property name="totalPrice"></property>
+		<many-to-one name="creater" column="creater" class="com.xinboiedu.erp.auth.emp.vo.EmpModel"></many-to-one>
+		<many-to-one name="checker" column="checker" class="com.xinboiedu.erp.auth.emp.vo.EmpModel"></many-to-one>
+		<many-to-one name="completer" column="completer" class="com.xinboiedu.erp.auth.emp.vo.EmpModel"></many-to-one>
+		<many-to-one name="sm" column="supplierId" class="com.xinboiedu.erp.invoice.supplier.vo.SupplierModel"></many-to-one>
+		<set name="odms" cascade="save-update" inverse="true" order-by="id">
+			<key column="orderId"></key>
+			<one-to-many class="com.xinboiedu.erp.invoice.orderDetail.vo.OrderDetailModel"/>
+		</set>
+	</class>
+</hibernate-mapping>
